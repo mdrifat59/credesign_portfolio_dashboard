@@ -2,7 +2,12 @@
 export default {
   content: ["./src/**/*.{html,js,jsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        "Jost-Medium":"Jost-Medium",
+        "Jost-Regular":"Jost-Regular", 
+      }
+    },
   },
   plugins: [],
 }

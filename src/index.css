@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@font-face{
+  font-family: "Jost-Medium";
+  src: url("./public/font/Jost-Medium.ttf");
+}
+@font-face{
+  font-family: "Jost-Regular";
+  src: url("./public/font/Jost-Regular.ttf");
+}
