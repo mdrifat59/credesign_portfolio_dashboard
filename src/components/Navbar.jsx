@@ -1,29 +1,121 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Navbar = () => {
+   const [menuItem, setMenuitem] = useState('');
+   const [buttonText, setButtonText] = useState('');
+   const [buttonShow, setButtonShow] = useState(false);
+   const [id, setId] = useState('');
+
+   const handleSubmit = () => {
+      if (id) {
+         axios
+            .put('http://localhost:8000/navbar/' + id, {
+               menuItem: menuItem,
+               buttonText: buttonText,
+               buttonShow: buttonShow,
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+      } else {
+         axios
+            .post('http://localhost:8000/navbar', {
+               menuItem: menuItem,
+               buttonText: buttonText,
+               buttonShow: buttonShow,
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+      }
+   };
+
+   const handleMenuChange = (e) => {
+      setMenuitem(e.target.value);
+   };
+
+   const handleButtonText = (e) => {
+      setButtonText(e.target.value);
+   };
+
+   const handleButtonShow = (e) => {
+      setButtonShow(e.target.checked);
+   };
+
+   useEffect(() => {
+      async function getData() {
+         const { data } = await axios.get('http://localhost:8000/navbaritem');
+         setMenuitem(data.menuItem);
+         setButtonText(data.buttonText);
+         setButtonShow(data.buttonShow);
+         setId(data._id);
+      }
+      getData();
+   }, []);
+
    return (
-      <div>
-         <h2 className='font-Jost-Regular text-3xl text-center py-5'>Navbar</h2>
-         <div className='grid grid-cols-2 gap-4 px-4 items-center'>
-            <div className='w-full py-2 border-2 border-black text-center'>
-               <h3 className='font-Jost-Regular text-2xl text-center border-black border-2 py-2'>Image Upload</h3>
-               <input type="file" className='my-7' name="" id="" /> <br />
+      <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+         <h2 className="text-4xl font-bold text-gray-800 mb-8">Navbar Settings</h2>
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+            {/* Image Upload */}
+            <div className="bg-white shadow-lg rounded-lg p-6">
+               <h3 className="text-lg font-semibold text-gray-800 mb-4">Image Upload</h3>
+               <input
+                  type="file"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+               />
             </div>
-            <div className='w-full py-2 border-2 border-black text-center'>
-               <h3 className='font-Jost-Regular text-2xl text-center border-black border-2 py-2'>Menu Item</h3>
-               <input type="text" className='w-3/4 border border-black outline-none px-4 py-2 my-5 rounded-xl' placeholder='Home, About, Contact' name="" id="" />
+
+            {/* Menu Item */}
+            <div className="bg-white shadow-lg rounded-lg p-6">
+               <h3 className="text-lg font-semibold text-gray-800 mb-4">Menu Item</h3>
+               <input
+                  value={menuItem}
+                  onChange={handleMenuChange}
+                  type="text"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+                  placeholder="Home, About, Contact"
+               />
             </div>
-            <div className='w-full py-2 border-2 border-black text-center'>
-               <h3 className='font-Jost-Regular text-2xl text-center border-black border-2 py-2'>Button Text</h3>
-               <input type="text" className='w-3/4 border border-black outline-none px-4 py-2 my-5 rounded-xl' placeholder='Button Text Change' name="" id="" />
+
+            {/* Button Text */}
+            <div className="bg-white shadow-lg rounded-lg p-6">
+               <h3 className="text-lg font-semibold text-gray-800 mb-4">Button Text</h3>
+               <input
+                  value={buttonText}
+                  onChange={handleButtonText}
+                  type="text"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+                  placeholder="Button Text Change"
+               />
             </div>
-            <div className='w-full py-2 border-2 text-center  border-black '>
-               <h3 className='font-Jost-Regular text-2xl text-center border-black border-2 py-2'>Button Use Or Not</h3>
-               <input type="checkbox" className='w-5 h-5 my-8 mr-3' name="check" id="" /><label htmlFor='check' className='font-Jost-Regular text-xl ' >Button show</label>
+
+            {/* Button Visibility */}
+            <div className="bg-white shadow-lg rounded-lg p-6">
+               <h3 className="text-lg font-semibold text-gray-800 mb-4">Button Visibility</h3>
+               <div className="flex items-center space-x-4">
+                  <input
+                     checked={buttonShow}
+                     onChange={handleButtonShow}
+                     type="checkbox"
+                     className="w-6 h-6 text-blue-600 focus:ring focus:ring-blue-200 rounded"
+                     id="button-show"
+                  />
+                  <label htmlFor="button-show" className="text-gray-800 text-lg">
+                     Show Button
+                  </label>
+               </div>
             </div>
          </div>
-      </div>
-   )
-}
 
-export default Navbar
+         <button
+            className="mt-8 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 focus:ring focus:ring-blue-300"
+            onClick={handleSubmit}
+         >
+            Submit
+         </button>
+      </div>
+   );
+};
+
+export default Navbar;
+
