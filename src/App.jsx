@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './App.css'
 import Navbar from './components/Navbar' 
 import Banner from './components/Banner'
+import About from './components/About'
 
 function App() {
 const [activeMenu, setActiveMenu]=useState('Navbar')
@@ -16,6 +17,7 @@ const [activeMenu, setActiveMenu]=useState('Navbar')
           <h2 className='font-Jost-Medium text-3xl py-5 text-center uppercase'>Dash Board <hr className='border-black mt-1' /> </h2>
           <ul>
             <li className='font-Jost-Regular text-xl p-2 border-b border-black hover:text-white hover:bg-gray-500' onClick={()=>handleActive("Navbar")}>Navbar</li>
+            <li className='font-Jost-Regular text-xl p-2 border-b border-black hover:text-white hover:bg-gray-500' onClick={()=>handleActive("Banner")}>Banner</li>
             <li className='font-Jost-Regular text-xl p-2 border-b border-black hover:text-white hover:bg-gray-500' onClick={()=>handleActive('About')}>About</li>
             <li className='font-Jost-Regular text-xl p-2 border-b border-black hover:text-white hover:bg-gray-500' onClick={()=>handleActive("Services")}>Services</li>
             <li className='font-Jost-Regular text-xl p-2 border-b border-black hover:text-white hover:bg-gray-500' onClick={()=>handleActive("Resume")}>Resume</li>
@@ -27,7 +29,8 @@ const [activeMenu, setActiveMenu]=useState('Navbar')
         </div>
         <div className='w-[80%] h-screen'>
           {activeMenu == "Navbar" &&  <Navbar/> }
-          {activeMenu == "About" &&  <Banner/> }
+          {activeMenu == "Banner" &&  <Banner/> }
+          {activeMenu == "About" &&  <About/> }
           {activeMenu == "Services" && <h1>Services</h1> }
           {activeMenu == "Resume" && <h1>Resume</h1> }
           {activeMenu == "Portfolio" && <h1>Portfolio</h1> }
