@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react' 
+import axios from 'axios';
 
 const About = () => {
     const [subHeading, setSubHeading] = useState('');
@@ -16,11 +17,66 @@ const About = () => {
     const [id, setId] = useState("")
 
     const handleSubmit = () => {
-        console.log(subHeading, heading, buttonText, paragraph, title_1,
-            title_2, bagNumber_1, bagNumber_2, bagTitle_1, bagTitle_2, buttonShow, circuleShow
-        );
-
+        if (id) {
+            axios.put('http://localhost:8000/about/' + id, {
+                subHeading: subHeading,
+                heading: heading,
+                paragraph: paragraph,
+                buttonText: buttonText,
+                buttonShow: buttonShow,
+                circuleShow: circuleShow,
+                title_1: title_1,
+                title_2: title_2,
+                bagTitle_1: bagTitle_1,
+                bagTitle_2: bagTitle_2,
+                bagNumber_1: bagNumber_1,
+                bagNumber_2: bagNumber_2,
+            }).then((res) => (
+                console.log(res)
+            )).catch((err) => (
+                console.log(err)
+            ))
+        } else {
+            axios.post('http://localhost:8000/about/', {
+                subHeading: subHeading,
+                heading: heading,
+                paragraph: paragraph,
+                buttonText: buttonText,
+                buttonShow: buttonShow,
+                circuleShow: circuleShow,
+                title_1: title_1,
+                title_2: title_2,
+                bagTitle_1: bagTitle_1,
+                bagTitle_2: bagTitle_2,
+                bagNumber_1: bagNumber_1,
+                bagNumber_2: bagNumber_2,
+            }).then((res) => (
+                console.log(res)
+            )).catch((err) => (
+                console.log(err)
+            ))
+        }
     }
+
+    useEffect(() => {
+        async function fatchData() {
+            const data = await axios.get('http://localhost:8000/aboutitem')
+            setSubHeading(data.data.subHeading)
+            setHeading(data.data.heading)
+            setButtonText(data.data.buttonText)
+            setButtonShow(data.data.buttonShow)
+            setParagraph(data.data.paragraph)
+            setCirculeShow(data.data.circuleShow)
+            setTitle_1(data.data.title_1)
+            setTitle_2(data.data.title_2)
+            setBagNumber_1(data.data.bagNumber_1)
+            setBagNumber_2(data.data.bagNumber_2)
+            setBagTitle_1(data.data.bagTitle_1)
+            setBagTitle_2(data.data.bagTitle_2)
+            setId(data.data._id)
+        }
+        fatchData()
+    }, [])
     return (
         <>
 
@@ -61,7 +117,7 @@ const About = () => {
                             name="paragraph"
                             value={paragraph}
                             onChange={(e) => setParagraph(e.target.value)}
-                            className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+                            className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:outline-none resize-none focus:ring focus:ring-blue-300"
                         />
                     </label>
 
@@ -77,26 +133,7 @@ const About = () => {
                         />
                     </label>
                     {/* Titles and Badges */}
-                    <label className="bg-white shadow-lg rounded-lg p-6">
-                        Title 1
-                        <input
-                            type="text"
-                            name="title1"
-                            value={title_1}
-                            onChange={(e) => setTitle_1(e.target.value)}
-                            className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
-                        />
-                    </label>
-                    <label className="bg-white shadow-lg rounded-lg p-6">
-                        Title 2
-                        <input
-                            type="text"
-                            name="title1"
-                            value={title_2}
-                            onChange={(e) => setTitle_2(e.target.value)}
-                            className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
-                        />
-                    </label>
+
                     <label className="bg-white shadow-lg rounded-lg p-6">
                         Badge 1 Number
                         <input
@@ -134,6 +171,26 @@ const About = () => {
                             name="badge2Title"
                             value={bagTitle_2}
                             onChange={(e) => setBagTitle_2(e.target.value)}
+                            className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+                        />
+                    </label>
+                    <label className="bg-white shadow-lg rounded-lg p-6">
+                        Title 1
+                        <input
+                            type="text"
+                            name="title1"
+                            value={title_1}
+                            onChange={(e) => setTitle_1(e.target.value)}
+                            className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+                        />
+                    </label>
+                    <label className="bg-white shadow-lg rounded-lg p-6">
+                        Title 2
+                        <input
+                            type="text"
+                            name="title1"
+                            value={title_2}
+                            onChange={(e) => setTitle_2(e.target.value)}
                             className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
                         />
                     </label>
