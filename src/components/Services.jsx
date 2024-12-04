@@ -1,33 +1,30 @@
 import React, { useState } from 'react'
 import Serviceshow from './Serviceshow';
+import axios from 'axios';
 
 const Services = () => {
-    const [services, setServices] = useState([]);
-    const [serviceData, setServiceData] = useState({
-        title: "",
-        subtitle: "",
-        showImage: true,
-        image: null,
-    });
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setServiceData({ ...serviceData, [name]: value });
-    };
-
-    const handleImageChange = (e) => {
-        setServiceData({ ...serviceData, image: e.target.files[0] });
-    };
-
-    const handleCheckboxChange = () => {
-        setServiceData({ ...serviceData, showImage: !serviceData.showImage });
-    };
+    const [title, setTitle] = useState('')
+    const [subTitle, setSubTitle] = useState('')
+    const [image, setImage] = useState('')
+    const [showImage, setShowImage] = useState(false)
 
     const handleAddService = () => {
-        setServices([...services, serviceData]);
-        setServiceData({ title: "", subtitle: "", showImage: true, image: null });
-    };
+        axios.post('http://localhost:8000/service', {
+            // image: image,
+            title: title,
+            subTitle: subTitle,
+            showImage: showImage,
+        }).then((req) => {
+            console.log(req);
+            setTitle("")
+            setSubTitle("")
+            setShowImage(false)
+            setImage("")
+        }).catch((err) => {
+            console.log(err);
+        });
 
+    }
     return (
         <>
             <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-md mx-auto">
@@ -39,8 +36,8 @@ const Services = () => {
                         <input
                             type="text"
                             name="title"
-                            value={serviceData.title}
-                            onChange={handleInputChange}
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
                             placeholder="Enter service title"
                             className="mt-1 block w-full rounded-md border-gray-300 py-2 px-4 outline-none shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
@@ -51,8 +48,8 @@ const Services = () => {
                         <label className="block text-sm font-medium text-gray-700">Subtitle</label>
                         <textarea
                             name="subtitle"
-                            value={serviceData.subtitle}
-                            onChange={handleInputChange}
+                            value={subTitle}
+                            onChange={(e) => setSubTitle(e.target.value)}
                             rows={3}
                             placeholder="Enter service subtitle"
                             className="mt-1 block w-full rounded-md border-gray-300 outline-none resize-none py-2 px-4  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -64,7 +61,7 @@ const Services = () => {
                         <label className="block text-sm font-medium text-gray-700">Image</label>
                         <input
                             type="file"
-                            onChange={handleImageChange}
+                            onChange={(e) => setImage(e.target.value)}
                             className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
                         />
                     </div>
@@ -73,8 +70,8 @@ const Services = () => {
                     <div className="flex items-center">
                         <input
                             type="checkbox"
-                            checked={serviceData.showImage}
-                            onChange={handleCheckboxChange}
+                            checked={showImage}
+                            onChange={(e) => setShowImage(e.target.checked)}
                             id="showImage"
                             className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
                         />

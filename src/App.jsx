@@ -16,7 +16,7 @@ const [activeMenu, setActiveMenu]=useState('Navbar')
       <div className='flex'>
         <div className='w-[20%] h-screen bg-gray-300 px-5 '>
           <h2 className='font-Jost-Medium text-3xl py-5 text-center uppercase'>Dash Board <hr className='border-black mt-1' /> </h2>
-          <ul>
+          <ul className='cursor-pointer'>
             <li className='font-Jost-Regular text-xl p-2 border-b border-black hover:text-white hover:bg-gray-500' onClick={()=>handleActive("Navbar")}>Navbar</li>
             <li className='font-Jost-Regular text-xl p-2 border-b border-black hover:text-white hover:bg-gray-500' onClick={()=>handleActive("Banner")}>Banner</li>
             <li className='font-Jost-Regular text-xl p-2 border-b border-black hover:text-white hover:bg-gray-500' onClick={()=>handleActive('About')}>About</li>

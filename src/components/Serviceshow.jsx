@@ -1,30 +1,19 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
 const Serviceshow = () => {
-    const [servicess, setServicess] = useState([
-        {
-            id: 1,
-            title: "Service 1",
-            subtitle: "This is the first service",
-            showImage: true,
-            image: "https://via.placeholder.com/100",
-        },
-        {
-            id: 2,
-            title: "Service 2",
-            subtitle: "This is the second service",
-            showImage: false,
-            image: null,
-        },
-    ]);
+    const [services, setServices] = useState([]) 
 
-    const handleUpdate = (id) => {
-        alert(`Update service with ID: ${id}`);
-    };
-
-    const handleDelete = (id) => {
-        setServicess(services.filter((service) => service.id !== id));
-    };
+    useEffect(()=>{
+        async function fatchData() {
+            const data = await 
+            axios.get('http://localhost:8000/serviceitem').then((res)=>{
+                 setServices(res.data)
+            }) 
+            
+        }
+        fatchData() 
+    },[])
 
     return (
         <div className="p-6 bg-gray-100 rounded-lg shadow-lg mt-10">
@@ -33,6 +22,7 @@ const Serviceshow = () => {
                 <table className="min-w-full border-collapse border border-gray-300 bg-white">
                     <thead>
                         <tr className="bg-gray-200">
+                            <th className="border border-gray-300 px-4 py-2 text-left">SR</th>
                             <th className="border border-gray-300 px-4 py-2 text-left">Image</th>
                             <th className="border border-gray-300 px-4 py-2 text-left">Title</th>
                             <th className="border border-gray-300 px-4 py-2 text-left">Subtitle</th>
@@ -41,8 +31,9 @@ const Serviceshow = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {servicess.map((service) => (
+                        {services.map((service, index) => (
                             <tr key={service.id} className="hover:bg-gray-100">
+                                <td className="border border-gray-300 px-4 py-2">{index+1}</td>
                                 {/* Image Column */}
                                 <td className="border border-gray-300 px-4 py-2">
                                     {service.showImage && service.image ? (
@@ -60,7 +51,7 @@ const Serviceshow = () => {
                                 <td className="border border-gray-300 px-4 py-2">{service.title}</td>
 
                                 {/* Subtitle Column */}
-                                <td className="border border-gray-300 px-4 py-2">{service.subtitle}</td>
+                                <td className="border border-gray-300 px-4 py-2">{service.subTitle}</td>
 
                                 {/* Showing Button Column */}
                                 <td className="border border-gray-300 px-4 py-2 text-center">
