@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import Serviceshow from './Serviceshow';
 import axios from 'axios';
+import Toast from './Toast';
 
 const Services = () => {
     const [title, setTitle] = useState('')
     const [subTitle, setSubTitle] = useState('')
     const [image, setImage] = useState('')
     const [showImage, setShowImage] = useState(false)
+    const [showToast, setShowToast] = useState(false);
+    const [message, setMessage] = useState("")
 
     const handleAddService = () => {
         axios.post('http://localhost:8000/service', {
@@ -14,12 +17,13 @@ const Services = () => {
             title: title,
             subTitle: subTitle,
             showImage: showImage,
-        }).then((req) => {
-            console.log(req);
+        }).then((res) => {
             setTitle("")
             setSubTitle("")
             setShowImage(false)
             setImage("")
+            setShowToast(true)
+            setMessage(res.data)
         }).catch((err) => {
             console.log(err);
         });
@@ -27,6 +31,11 @@ const Services = () => {
     }
     return (
         <>
+            <Toast
+                message={message}
+                visible={showToast}
+                onClose={() => setShowToast(false)}
+            />
             <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-md mx-auto">
                 <h2 className="text-4xl font-bold mb-4 capitalize text-center">Add Service</h2>
                 <form className="space-y-4">
