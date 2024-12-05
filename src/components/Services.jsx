@@ -9,24 +9,25 @@ const Services = () => {
     const [image, setImage] = useState('')
     const [showImage, setShowImage] = useState(false)
     const [showToast, setShowToast] = useState(false);
-    const [message, setMessage] = useState("")
+    const [message, setMessage] = useState("") 
 
-    const handleAddService = () => {
-        axios.post('http://localhost:8000/service', {
-            // image: image,
-            title: title,
-            subTitle: subTitle,
-            showImage: showImage,
-        }).then((res) => {
-            setTitle("")
-            setSubTitle("")
-            setShowImage(false)
-            setImage("")
-            setShowToast(true)
-            setMessage(res.data)
-        }).catch((err) => {
-            console.log(err);
-        });
+    const handleAddService = () => { 
+         
+            axios.post('http://localhost:8000/service', {
+              // image: image,
+              title: title,
+              subTitle: subTitle,
+              showImage: showImage,
+          }).then((res) => {
+              setTitle("")
+              setSubTitle("")
+              setShowImage(false)
+              setImage("")
+              setShowToast(true)
+              setMessage(res.data)
+          }).catch((err) => {
+              console.log(err);
+          }); 
 
     }
     return (
@@ -98,8 +99,8 @@ const Services = () => {
                         Add Service
                     </button>
                 </form>
-            </div>
-            <Serviceshow />
+            </div> 
+            <Serviceshow  />
         </>
 
     );

@@ -1,11 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Toast from './Toast'
+import ServiceModal from './ServiceModal'
 
 const Serviceshow = () => {
     const [services, setServices] = useState([])
     const [showToast, setShowToast] = useState(false);
     const [message, setMessage] = useState("")
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const closeModal = () => setIsModalOpen(false);
+    const [id, setId] = useState("")
+    const [title, setTitle] = useState('')
+    const [subTitle, setSubTitle] = useState('')
+    const [image, setImage] = useState('')
+    const [showImage, setShowImage] = useState(false)
+    const openModal = (item) => {
+        setIsModalOpen(true)
+        setTitle(item.title)
+        setSubTitle(item.subTitle)
+        setImage(item.image)
+        setShowImage(item.showImage)
+        setId(item._id)
+    };
 
     useEffect(() => {
         async function fatchData() {
@@ -33,6 +49,8 @@ const Serviceshow = () => {
                 visible={showToast}
                 onClose={() => setShowToast(false)}
             />
+            <ServiceModal setShowToast={setShowToast} setMessage={setMessage} setServices={setServices} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} openModal={openModal} closeModal={closeModal} id={id} title={title} subTitle={subTitle} showImage={showImage} setTitle={setTitle} setSubTitle={setSubTitle} setShowImage={setShowImage} />
+
             <div className="p-6 bg-gray-100 rounded-lg shadow-lg mt-10">
                 <h2 className="text-2xl font-bold mb-4 text-center">Services Table</h2>
                 <div className="overflow-x-auto">
@@ -90,7 +108,7 @@ const Serviceshow = () => {
                                     {/* Actions Column */}
                                     <td className="border border-gray-300 px-4 py-2 text-center space-x-2">
                                         <button
-                                            onClick={() => handleUpdate(service.id)}
+                                            onClick={() => openModal(service)}
                                             className="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700"
                                         >
                                             Update
