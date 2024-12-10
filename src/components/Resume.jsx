@@ -5,12 +5,23 @@ const Resume = () => {
     const [title, setTitle] = useState('')
     const [heading, setHeading] = useState('')
     const [showCircule, setShowCircule] = useState('')
+    const [id, setId] = useState("")
     const handleHeadingSubmit = () => {
-        axios.post('http://localhost:8000/resume', {
-            title: title,
-            heading: heading,
-            showCircule: showCircule,
-        })
+        if (id) {
+            axios.put('http://localhost:8000/resume/' + id, {
+                title: title,
+                heading: heading,
+                showCircule: showCircule,
+            }).then((res) => console.log(res))
+                .catch((err) => console.log(err));
+        } else {
+            axios.post('http://localhost:8000/resume', {
+                title: title,
+                heading: heading,
+                showCircule: showCircule,
+            }).then((res) => console.log(res))
+                .catch((err) => console.log(err));
+        }
     }
     useEffect(() => {
         async function fatchData() {
@@ -18,6 +29,7 @@ const Resume = () => {
             setTitle(data.title)
             setHeading(data.heading)
             setShowCircule(data.showCircule)
+            setId(data._id)
         }
         fatchData()
     }, [])
