@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Banner from './components/Banner'
 import About from './components/About'
 import Services from './components/Services'
+import Resume from './components/Resume'
 
 function App() {
 const [activeMenu, setActiveMenu]=useState('Navbar')
@@ -33,7 +34,7 @@ const [activeMenu, setActiveMenu]=useState('Navbar')
           {activeMenu == "Banner" &&  <Banner/> }
           {activeMenu == "About" &&  <About/> }
           {activeMenu == "Services" && <Services/> }
-          {activeMenu == "Resume" && <h1>Resume</h1> }
+          {activeMenu == "Resume" && <Resume/> }
           {activeMenu == "Portfolio" && <h1>Portfolio</h1> }
           {activeMenu == "Testimonial" && <h1>Testimonial</h1> }
           {activeMenu == "Blog" && <h1>Blog</h1> }
