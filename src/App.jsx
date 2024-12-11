@@ -4,7 +4,7 @@ import Navbar from './components/Navbar'
 import Banner from './components/Banner'
 import About from './components/About'
 import Services from './components/Services'
-import Resume from './components/Resume'
+import Resume from './components/resume/Resume'
 
 function App() {
 const [activeMenu, setActiveMenu]=useState('Navbar')
