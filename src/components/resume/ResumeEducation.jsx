@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-const ResumeEducation = () => {
+const ResumeEducation = ({ setEducation }) => {
     const [eduHeading, setEduHeading] = useState('')
     const [eduTitle, setEduTitle] = useState('')
     const [eduDes, setEduDes] = useState('')
-    // const [id, setId] = useState("")
 
     const handleEducationSubmit = () => {
         axios.post('http://localhost:8000/resumeeducation', {
@@ -15,20 +14,16 @@ const ResumeEducation = () => {
             setEduHeading('')
             setEduDes('')
             setEduTitle('')
+            async function fatchEduData() {
+                const { data } = await axios.get('http://localhost:8000/resumeeducationitem')
+                setEducation(data)
+            }
+            fatchEduData()
         })
             .catch((err) => console.log(err));
     }
 
-    useEffect(() => {
-        async function fatchData() {
-            const { data } = await axios.get('http://localhost:8000/resumeeducationitem')
-            setEduHeading(data.eduHeading)
-            setEduDes(data.eduDes)
-            setEduTitle(data.eduTitle)
-            // setId(data._id)
-        }
-        fatchData()
-    }, [])
+
     return (
         <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-md mx-auto">
             <h2 className="text-4xl font-bold mb-4 capitalize text-center">Education</h2>
