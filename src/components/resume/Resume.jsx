@@ -9,8 +9,13 @@ const Resume = () => {
     const [heading, setHeading] = useState('')
     const [showCircule, setShowCircule] = useState('')
     const [education, setEducation] = useState([])
+    const [eduHeading, setEduHeading] = useState('')
+    const [eduTitle, setEduTitle] = useState('')
+    const [eduDes, setEduDes] = useState('')
+    const [eduId, setEduId] = useState("")
     const [id, setId] = useState("")
-    const [eduid, setEduId] = useState("")
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const handleHeadingSubmit = () => {
         if (id) {
             axios.put('http://localhost:8000/resume/' + id, {
@@ -50,7 +55,6 @@ const Resume = () => {
                 setEducation(data)
             }
             fatchEduData()
-            // console.log("this is me");
         }).catch((err) => {
             console.log(err);
 
@@ -58,6 +62,14 @@ const Resume = () => {
 
 
     }
+    const handleEducationUpdate = (item) => {
+        setIsModalOpen(true)
+        setEduDes(item.eduDes)
+        setEduHeading(item.eduHeading)
+        setEduTitle(item.eduTitle)
+        setEduId(item._id)
+    }
+
     return (
         <>
             <div className='p-5'>
@@ -116,7 +128,7 @@ const Resume = () => {
                 {/* ============ */}
                 <div className='grid grid-cols-3 mt-5 gap-5'>
                     <div className="">
-                        <ResumeEducation setEducation={setEducation} education={education} />
+                        <ResumeEducation eduId={eduId} eduDes={eduDes} setEduDes={setEduDes} eduHeading={eduHeading} setEduHeading={setEduHeading} eduTitle={eduTitle} setEduTitle={setEduTitle} setEducation={setEducation} education={education} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
                     </div>
                     <div className="">
                         <ResumeSoftSkil />
@@ -134,7 +146,6 @@ const Resume = () => {
                             <thead>
                                 <tr className="bg-gray-200">
                                     <th className="border border-gray-300 px-4 py-2 text-left">SR</th>
-                                    {/* <th className="border border-gray-300 px-4 py-2 text-left">Image</th> */}
                                     <th className="border border-gray-300 px-4 py-2 text-center">Heading</th>
                                     <th className="border border-gray-300 px-4 py-2 text-center">Title</th>
                                     <th className="border border-gray-300 px-4 py-2 text-center">Description</th>
@@ -156,13 +167,13 @@ const Resume = () => {
                                         {/* Actions Column */}
                                         <td className="border border-gray-300 px-4 py-2 text-center space-x-2">
                                             <button
-                                                // onClick={() => openModal(service)}
+                                                onClick={() => handleEducationUpdate(item)}
                                                 className="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700"
                                             >
                                                 Update
                                             </button>
                                             <button
-                                                onClick={() => handleEducationDelete(item)}
+                                                onClick={() => handleEducationDelete}
                                                 className="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded hover:bg-red-700"
                                             >
                                                 Delete
