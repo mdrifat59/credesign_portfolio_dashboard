@@ -123,6 +123,13 @@ const Resume = () => {
         })
             .catch((err) => console.log(err));
     }
+    const handleExperianceUpdate = (item) => {
+        setIsModalOpen3(true)
+        setExpDes(item.expDes)
+        setExpHeading(item.expHeading)
+        setExpTitle(item.expTitle)
+        setExpId(item._id)
+    }
     return (
         <>
             <div className='p-5'>
@@ -319,7 +326,7 @@ const Resume = () => {
                                         {/* Actions Column */}
                                         <td className="border border-gray-300 px-4 py-2 text-center space-x-2">
                                             <button
-                                                // onClick={() => handleSoftSkillUpdate(item)}
+                                                onClick={() => handleExperianceUpdate(item)}
                                                 className="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700"
                                             >
                                                 Update
