@@ -2,16 +2,14 @@ import React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 
-const ResumeExperiance = () => {
-    const [expHeading, setExpHeading] = useState('')
-    const [expTitle, setExpTitle] = useState('')
-    const [expDes, setExpDes] = useState('')
+const ResumeExperiance = ({ closeModal3, isModalOpen3, expId, expDes, expHeading, expTitle, setExpDes, setExpHeading, setExpTitle, setExperiance }) => {
+
 
     const handleExparianceSubmit = () => {
         axios.post('http://localhost:8000/resumeexperiance', {
             expHeading: expHeading,
             expTitle: expTitle,
-            expDes: expDes,
+            expDes: expDExp
         }).then((res) => {
             setExpDes('')
             setExpHeading('')

@@ -101,7 +101,7 @@ const ResumeSoftSkil = ({ closeModal2, isModalOpen2, sofId, sofDes, sofHeading, 
                 </div>
             </div>
             {/* ======= Education Modal ========= */}
-            <Modal isOpen={isModalOpen2} onClose={closeModal2} title="Education">
+            <Modal isOpen={isModalOpen2} onClose={closeModal2} title="Soft Skill">
                 <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-md mx-auto">
                     <h2 className="text-4xl font-bold mb-4 capitalize text-center">SoftSkill</h2>
                     <form className="space-y-4">

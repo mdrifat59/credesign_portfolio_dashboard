@@ -10,6 +10,7 @@ const Resume = () => {
     const [showCircule, setShowCircule] = useState('')
     const [education, setEducation] = useState([])
     const [softSkill, setSoftSkill] = useState([])
+    const [experiance, setExperiance] = useState([])
     const [eduHeading, setEduHeading] = useState('')
     const [eduTitle, setEduTitle] = useState('')
     const [eduDes, setEduDes] = useState('')
@@ -18,11 +19,17 @@ const Resume = () => {
     const [sofTitle, setSofTitle] = useState('')
     const [sofDes, setSofDes] = useState('')
     const [sofId, setSofId] = useState("")
+    const [expId, setExpId] = useState("")
+    const [expHeading, setExpHeading] = useState('')
+    const [expTitle, setExpTitle] = useState('')
+    const [expDes, setExpDes] = useState('')
     const [id, setId] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen2, setIsModalOpen2] = useState(false);
+    const [isModalOpen3, setIsModalOpen3] = useState(false);
     const closeModal = () => setIsModalOpen(false);
     const closeModal2 = () => setIsModalOpen2(false);
+    const closeModal3 = () => setIsModalOpen3(false);
 
     const handleHeadingSubmit = () => {
         if (id) {
@@ -57,6 +64,12 @@ const Resume = () => {
             const { data } = await axios.get('http://localhost:8000/resumesoftitem')
             setSoftSkill(data)
         }
+        async function fatchexperianceData() {
+            const { data } = await axios.get('http://localhost:8000/resumeexperianceitem')
+            setExperiance(data)
+
+        }
+        fatchexperianceData()
         fatchsoftData()
         fatchEduData()
         fatchData()
@@ -163,7 +176,7 @@ const Resume = () => {
                         <ResumeSoftSkil closeModal2={closeModal2} isModalOpen2={isModalOpen2} setSoftSkill={setSoftSkill} sofId={sofId} sofDes={sofDes} setSofDes={setSofDes} sofHeading={sofHeading} setSofHeading={setSofHeading} sofTitle={sofTitle} setSofTitle={setSofTitle} />
                     </div>
                     <div className="">
-                        <ResumeExperiance />
+                        <ResumeExperiance closeModal3={closeModal3} isModalOpen3={isModalOpen3} setExperiance={setExperiance} expId={expId} expDes={expDes} setExpDes={setExpDes} expHeading={expHeading} setExpHeading={setExpHeading} expTitle={expTitle} setExpTitle={setExpTitle} />
                     </div>
                 </div>
             </div>
@@ -243,6 +256,55 @@ const Resume = () => {
                                         <td className="border border-gray-300 px-4 py-2">{item.sofTitle}</td>
                                         {/* Description Column */}
                                         <td className="border w-[420px] border-gray-300 px-4 py-2">{item.sofDes}</td>
+                                        {/* Actions Column */}
+                                        <td className="border border-gray-300 px-4 py-2 text-center space-x-2">
+                                            <button
+                                                onClick={() => handleSoftSkillUpdate(item)}
+                                                className="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700"
+                                            >
+                                                Update
+                                            </button>
+                                            <button
+                                                onClick={() => handleSoftSkillDelete(item)}
+                                                className="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded hover:bg-red-700"
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {/* =============== Experiance show ============= */}
+            <div className="p-6">
+                <div className="p-6 bg-gray-100 rounded-lg shadow-lg mt-10">
+                    <h2 className="text-2xl font-bold mb-4 text-center"> Experience Table</h2>
+                    <div className="overflow-x-auto h-[220px]">
+                        <table className="min-w-full border-collapse border border-gray-300 bg-white">
+                            <thead>
+                                <tr className="bg-gray-200">
+                                    <th className="border border-gray-300 px-4 py-2 text-left">SR</th>
+                                    <th className="border border-gray-300 px-4 py-2 text-center">Heading</th>
+                                    <th className="border border-gray-300 px-4 py-2 text-center">Title</th>
+                                    <th className="border border-gray-300 px-4 py-2 text-center">Description</th>
+                                    <th className="border border-gray-300 px-4 py-2 text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {experiance.map((item, index) => (
+                                    <tr key={index} className="hover:bg-gray-100">
+                                        <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
+
+                                        {/* Heading Column */}
+                                        <td className="border border-gray-300 px-4 py-2">{item.expHeading}</td>
+
+                                        {/* title Column */}
+                                        <td className="border border-gray-300 px-4 py-2">{item.expTitle}</td>
+                                        {/* Description Column */}
+                                        <td className="border w-[420px] border-gray-300 px-4 py-2">{item.expDes}</td>
                                         {/* Actions Column */}
                                         <td className="border border-gray-300 px-4 py-2 text-center space-x-2">
                                             <button
