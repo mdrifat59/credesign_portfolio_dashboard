@@ -9,11 +9,11 @@ const ResumeExperiance = ({ closeModal3, isModalOpen3, expId, expDes, expHeading
         axios.post('http://localhost:8000/resumeexperiance', {
             expHeading: expHeading,
             expTitle: expTitle,
-            expDes: expDExp
+            expDes: expDes
         }).then((res) => {
-            setExpDes('')
-            setExpHeading('')
-            setExpTitle('')
+            // setExpDes('')
+            // setExpHeading('')
+            // setExpTitle('')
             console.log(res)
         })
             .catch((err) => console.log(err));
