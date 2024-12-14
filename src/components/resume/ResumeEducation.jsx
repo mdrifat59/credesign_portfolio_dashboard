@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import axios from 'axios'
 import Modal from '../Modal'
 const ResumeEducation = ({ eduId, eduDes, setEduDes, eduHeading, setEduHeading, eduTitle, setEduTitle, setEducation, isModalOpen, closeModal }) => {
@@ -13,18 +13,15 @@ const ResumeEducation = ({ eduId, eduDes, setEduDes, eduHeading, setEduHeading, 
             setEduHeading('')
             setEduDes('')
             setEduTitle('')
+            async function fatchEduData() {
+                const { data } = await axios.get('http://localhost:8000/resumeeducationitem')
+                setEducation(data)
+            }
+            fatchEduData()
 
         })
             .catch((err) => console.log(err));
-    }
-    useEffect(() => {
-        async function fatchEduData() {
-            const { data } = await axios.get('http://localhost:8000/resumeeducationitem')
-            setEducation(data)
-        }
-        fatchEduData()
-    }, [handleEducationSubmit])
-
+    } 
     const handleEducationUpdate = () => {
 
         axios.put(`http://localhost:8000/resumeeducation/${eduId}`, {
@@ -35,7 +32,7 @@ const ResumeEducation = ({ eduId, eduDes, setEduDes, eduHeading, setEduHeading, 
             closeModal()
             setEduHeading('')
             setEduDes('')
-            setEduTitle('')
+            setEduTitle('') 
             async function fatchEduData() {
                 const { data } = await axios.get('http://localhost:8000/resumeeducationitem')
                 setEducation(data)
@@ -48,6 +45,7 @@ const ResumeEducation = ({ eduId, eduDes, setEduDes, eduHeading, setEduHeading, 
 
 
     }
+   
     return (
         <>
             <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-md mx-auto">

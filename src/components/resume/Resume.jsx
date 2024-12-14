@@ -20,7 +20,9 @@ const Resume = () => {
     const [sofId, setSofId] = useState("")
     const [id, setId] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen2, setIsModalOpen2] = useState(false);
     const closeModal = () => setIsModalOpen(false);
+    const closeModal2 = () => setIsModalOpen2(false);
 
     const handleHeadingSubmit = () => {
         if (id) {
@@ -90,6 +92,13 @@ const Resume = () => {
 
         })
     }
+    const handleSoftSkillUpdate = (item) => {
+        setIsModalOpen2(true)
+        setSofDes(item.sofDes)
+        setSofHeading(item.sofHeading)
+        setSofTitle(item.sofTitle)
+        setSofId(item._id)
+    }
     return (
         <>
             <div className='p-5'>
@@ -151,7 +160,7 @@ const Resume = () => {
                         <ResumeEducation closeModal={closeModal} eduId={eduId} eduDes={eduDes} setEduDes={setEduDes} eduHeading={eduHeading} setEduHeading={setEduHeading} eduTitle={eduTitle} setEduTitle={setEduTitle} setEducation={setEducation} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
                     </div>
                     <div className="">
-                        <ResumeSoftSkil setSoftSkill={setSoftSkill} sofId={sofId} sofDes={sofDes} setSofDes={setSofDes} sofHeading={sofHeading} setSofHeading={setSofHeading} sofTitle={sofTitle} setSofTitle={setSofTitle} />
+                        <ResumeSoftSkil closeModal2={closeModal2} isModalOpen2={isModalOpen2} setSoftSkill={setSoftSkill} sofId={sofId} sofDes={sofDes} setSofDes={setSofDes} sofHeading={sofHeading} setSofHeading={setSofHeading} sofTitle={sofTitle} setSofTitle={setSofTitle} />
                     </div>
                     <div className="">
                         <ResumeExperiance />
@@ -237,7 +246,7 @@ const Resume = () => {
                                         {/* Actions Column */}
                                         <td className="border border-gray-300 px-4 py-2 text-center space-x-2">
                                             <button
-                                                // onClick={() => handleEducationUpdate(item)}
+                                                onClick={() => handleSoftSkillUpdate(item)}
                                                 className="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700"
                                             >
                                                 Update
