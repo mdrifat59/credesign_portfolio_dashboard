@@ -10,7 +10,7 @@ const ResumeEducation = ({ setIsModalOpen, eduId, eduDes, setEduDes, eduHeading,
             eduTitle: eduTitle,
             eduDes: eduDes,
         }).then((res) => {
-            setEduHeading('')
+            // setEduHeading('')
             setEduDes('')
             setEduTitle('')
             async function fatchEduData() {
@@ -23,12 +23,17 @@ const ResumeEducation = ({ setIsModalOpen, eduId, eduDes, setEduDes, eduHeading,
     }
 
     const handleEducationUpdate = () => {
+        
         axios.put(`http://localhost:8000/resumeeducation/${eduId}`, {
             eduHeading: eduHeading,
             eduTitle: eduTitle,
             eduDes: eduDes,
         }).then((res) => {
-            setIsModalOpen(false) 
+            // setIsModalOpen(false) 
+            closeModal()
+            setEduHeading('')
+            setEduDes('')
+            setEduTitle('')
             async function fatchEduData() {
                 const { data } = await axios.get('http://localhost:8000/resumeeducationitem')
                 setEducation(data)
@@ -51,7 +56,7 @@ const ResumeEducation = ({ setIsModalOpen, eduId, eduDes, setEduDes, eduHeading,
                         <label className="block text-sm font-medium text-gray-700 ">Heading</label>
                         <input
                             type="text"
-                            name="title"
+                            // name="title"
                             value={eduHeading}
                             onChange={(e) => setEduHeading(e.target.value)}
                             placeholder="Enter education heading"
@@ -64,7 +69,7 @@ const ResumeEducation = ({ setIsModalOpen, eduId, eduDes, setEduDes, eduHeading,
                         <label className="block text-sm font-medium text-gray-700 ">Title</label>
                         <input
                             type="text"
-                            name="heading"
+                            // name="heading"
                             value={eduTitle}
                             onChange={(e) => setEduTitle(e.target.value)}
                             placeholder="Enter education title"
@@ -104,7 +109,7 @@ const ResumeEducation = ({ setIsModalOpen, eduId, eduDes, setEduDes, eduHeading,
                             <label className="block text-sm font-medium text-gray-700 ">Heading</label>
                             <input
                                 type="text"
-                                name="title"
+                                // name="title"
                                 value={eduHeading}
                                 onChange={(e) => setEduHeading(e.target.value)}
                                 placeholder="Enter service title"
@@ -116,7 +121,7 @@ const ResumeEducation = ({ setIsModalOpen, eduId, eduDes, setEduDes, eduHeading,
                             <label className="block text-sm font-medium text-gray-700 ">Title</label>
                             <input
                                 type="text"
-                                name="title"
+                                // name="title"
                                 value={eduTitle}
                                 onChange={(e) => setEduTitle(e.target.value)}
                                 placeholder="Enter service title"
@@ -128,7 +133,7 @@ const ResumeEducation = ({ setIsModalOpen, eduId, eduDes, setEduDes, eduHeading,
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Description</label>
                             <textarea
-                                name="subtitle"
+                                // name="subtitle"
                                 value={eduDes}
                                 onChange={(e) => setEduDes(e.target.value)}
                                 rows={3}
@@ -154,3 +159,4 @@ const ResumeEducation = ({ setIsModalOpen, eduId, eduDes, setEduDes, eduHeading,
 }
 
 export default ResumeEducation 
+ 
