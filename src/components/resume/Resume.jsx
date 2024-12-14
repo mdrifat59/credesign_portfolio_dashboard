@@ -14,6 +14,10 @@ const Resume = () => {
     const [eduTitle, setEduTitle] = useState('')
     const [eduDes, setEduDes] = useState('')
     const [eduId, setEduId] = useState("")
+    const [sofHeading, setSofHeading] = useState('')
+    const [sofTitle, setSofTitle] = useState('')
+    const [sofDes, setSofDes] = useState('')
+    const [sofId, setSofId] = useState("")
     const [id, setId] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false);
     const closeModal = () => setIsModalOpen(false);
@@ -66,8 +70,6 @@ const Resume = () => {
             console.log(err);
 
         })
-
-
     }
     const handleEducationUpdate = (item) => {
         setIsModalOpen(true)
@@ -76,7 +78,18 @@ const Resume = () => {
         setEduTitle(item.eduTitle)
         setEduId(item._id)
     }
+    const handleSoftSkillDelete = (item) => {
+        axios.delete(`http://localhost:8000/reusmesoft/${item._id}`).then((res) => {
+            async function fatchEduData() {
+                const { data } = await axios.get('http://localhost:8000/resumesoftitem')
+                setSoftSkill(data)
+            }
+            fatchEduData()
+        }).catch((err) => {
+            console.log(err);
 
+        })
+    }
     return (
         <>
             <div className='p-5'>
@@ -135,10 +148,10 @@ const Resume = () => {
                 {/* ============ */}
                 <div className='grid grid-cols-3 mt-5 gap-5'>
                     <div className="">
-                        <ResumeEducation closeModal={closeModal} eduId={eduId} eduDes={eduDes} setEduDes={setEduDes} eduHeading={eduHeading} setEduHeading={setEduHeading} eduTitle={eduTitle} setEduTitle={setEduTitle} setEducation={setEducation} education={education} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+                        <ResumeEducation closeModal={closeModal} eduId={eduId} eduDes={eduDes} setEduDes={setEduDes} eduHeading={eduHeading} setEduHeading={setEduHeading} eduTitle={eduTitle} setEduTitle={setEduTitle} setEducation={setEducation} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
                     </div>
                     <div className="">
-                        <ResumeSoftSkil />
+                        <ResumeSoftSkil setSoftSkill={setSoftSkill} sofId={sofId} sofDes={sofDes} setSofDes={setSofDes} sofHeading={sofHeading} setSofHeading={setSofHeading} sofTitle={sofTitle} setSofTitle={setSofTitle} />
                     </div>
                     <div className="">
                         <ResumeExperiance />
@@ -181,7 +194,7 @@ const Resume = () => {
                                                 Update
                                             </button>
                                             <button
-                                                onClick={() => handleEducationDelete}
+                                                onClick={() => handleEducationDelete(item)}
                                                 className="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded hover:bg-red-700"
                                             >
                                                 Delete
@@ -224,13 +237,13 @@ const Resume = () => {
                                         {/* Actions Column */}
                                         <td className="border border-gray-300 px-4 py-2 text-center space-x-2">
                                             <button
-                                                onClick={() => handleEducationUpdate(item)}
+                                                // onClick={() => handleEducationUpdate(item)}
                                                 className="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700"
                                             >
                                                 Update
                                             </button>
                                             <button
-                                                onClick={() => handleEducationDelete}
+                                                onClick={() => handleSoftSkillDelete(item)}
                                                 className="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded hover:bg-red-700"
                                             >
                                                 Delete

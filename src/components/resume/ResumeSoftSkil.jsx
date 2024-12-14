@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-const ResumeSoftSkil = () => {
-    const [sofHeading, setSofHeading] = useState('')
-    const [sofTitle, setSofTitle] = useState('')
-    const [sofDes, setSofDes] = useState('')
+const ResumeSoftSkil = ({ sofId, sofDes, sofHeading, sofTitle, setSofDes, setSofHeading, setSofTitle, setSoftSkill }) => {
+
 
     const handleSoftSubmit = () => {
         axios.post('http://localhost:8000/resumesoft', {
@@ -14,11 +12,19 @@ const ResumeSoftSkil = () => {
             setSofHeading('')
             setSofTitle('')
             setSofDes('')
+
             console.log(res);
         })
             .catch((err) => console.log(err));
 
     }
+    useEffect(() => {
+        async function fatchsoftData() {
+            const { data } = await axios.get('http://localhost:8000/resumesoftitem')
+            setSoftSkill(data)
+        }
+        fatchsoftData()
+    }, [handleSoftSubmit])
     return (
         <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-md mx-auto">
             <h2 className="text-4xl font-bold mb-4 capitalize text-center">Software Skills</h2>
