@@ -6,31 +6,27 @@ const Banner = () => {
    const [heading, setHeading] = useState('');
    const [buttonText, setButtonText] = useState('');
    const [paragraph, setParagraph] = useState('');
+   const [image, setImage] = useState('')
+   const [bannerImage, setBannerImage] = useState('')
    const [buttonShow, setButtonShow] = useState(false);
    const [circuleShow, setCirculeShow] = useState(false);
    const [id, setId] = useState("")
 
    const handleSubmit = () => {
+      const data = new FormData()
+      data.append("subHeading", subHeading)
+      data.append("heading", heading)
+      data.append("buttonText", buttonText)
+      data.append("buttonShow", buttonShow)
+      data.append("circuleShow", circuleShow)
+      data.append("paragraph", paragraph)
+      data.append("image", image)
       if (id) {
          axios
-            .put('http://localhost:8000/banner/' + id, {
-               subHeading: subHeading,
-               heading: heading,
-               buttonText: buttonText,
-               buttonShow: buttonShow,
-               circuleShow: circuleShow,
-               paragraph: paragraph,
-            }).then((res) => console.log(res))
+            .put('http://localhost:8000/banner/' + id, data).then((res) => console.log(res))
             .catch((err) => console.log(err))
       } else {
-         axios.post("http://localhost:8000/banner/", {
-            subHeading: subHeading,
-            heading: heading,
-            buttonText: buttonText,
-            buttonShow: buttonShow,
-            circuleShow: circuleShow,
-            paragraph: paragraph,
-         }).then((res) => console.log(res))
+         axios.post("http://localhost:8000/banner/", data).then((res) => console.log(res))
             .catch((err) => console.log(err))
       }
    };
@@ -44,14 +40,20 @@ const Banner = () => {
          setButtonText(data.data.buttonText)
          setButtonShow(data.data.buttonShow)
          setCirculeShow(data.data.circuleShow)
+         setBannerImage(data.data.image)
          setId(data.data._id)
       }
       fatchData()
    }, [])
+   const handleChange = (e) => {
+      setImage(e.target.files[0])
+   }
+
 
    return (
       <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
          <h2 className="text-4xl font-bold text-gray-800 mb-8">Banner Section</h2>
+         <img width={50} src={`http://localhost:8000/${bannerImage}`} alt="" />
          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
             {/* Subheading Input */}
             <div className="bg-white shadow-lg rounded-lg p-6">
@@ -122,6 +124,8 @@ const Banner = () => {
                <h3 className="text-lg font-semibold text-gray-800 mb-4">Upload Banner Image</h3>
                <input
                   type="file"
+                  onChange={handleChange}
+                  // value={bannerImage}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
                />
             </div>
