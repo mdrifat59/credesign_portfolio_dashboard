@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react' 
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 
 const About = () => {
@@ -14,43 +14,33 @@ const About = () => {
     const [bagTitle_2, setBagTitle_2] = useState('')
     const [bagNumber_1, setBagNumber_1] = useState('')
     const [bagNumber_2, setBagNumber_2] = useState('')
+    const [image, setImage] = useState('')
+    const [aboutImage, setAboutImage] = useState('')
     const [id, setId] = useState("")
 
     const handleSubmit = () => {
+        const data = new FormData()
+        data.append("subHeading", subHeading)
+        data.append("heading", heading)
+        data.append("paragraph", paragraph)
+        data.append("buttonText", buttonText)
+        data.append("buttonShow", buttonShow)
+        data.append("circuleShow", circuleShow)
+        data.append("title_1", title_1)
+        data.append("title_2", title_2)
+        data.append("bagTitle_1", bagTitle_1)
+        data.append("bagTitle_2", bagTitle_2)
+        data.append("bagNumber_1", bagNumber_1)
+        data.append("bagNumber_2", bagNumber_2)
+        data.append("image", image)
         if (id) {
-            axios.put('http://localhost:8000/about/' + id, {
-                subHeading: subHeading,
-                heading: heading,
-                paragraph: paragraph,
-                buttonText: buttonText,
-                buttonShow: buttonShow,
-                circuleShow: circuleShow,
-                title_1: title_1,
-                title_2: title_2,
-                bagTitle_1: bagTitle_1,
-                bagTitle_2: bagTitle_2,
-                bagNumber_1: bagNumber_1,
-                bagNumber_2: bagNumber_2,
-            }).then((res) => (
+            axios.put(`http://localhost:8000/about/${id}`, data).then((res) => (
                 console.log(res)
             )).catch((err) => (
                 console.log(err)
             ))
         } else {
-            axios.post('http://localhost:8000/about/', {
-                subHeading: subHeading,
-                heading: heading,
-                paragraph: paragraph,
-                buttonText: buttonText,
-                buttonShow: buttonShow,
-                circuleShow: circuleShow,
-                title_1: title_1,
-                title_2: title_2,
-                bagTitle_1: bagTitle_1,
-                bagTitle_2: bagTitle_2,
-                bagNumber_1: bagNumber_1,
-                bagNumber_2: bagNumber_2,
-            }).then((res) => (
+            axios.post('http://localhost:8000/about/', data).then((res) => (
                 console.log(res)
             )).catch((err) => (
                 console.log(err)
@@ -73,17 +63,19 @@ const About = () => {
             setBagNumber_2(data.data.bagNumber_2)
             setBagTitle_1(data.data.bagTitle_1)
             setBagTitle_2(data.data.bagTitle_2)
+            setAboutImage(data.data.image)
             setId(data.data._id)
         }
         fatchData()
     }, [])
+    const handleChange = (e) => {
+        setImage(e.target.files[0])
+    }
     return (
         <>
-
-            {/* adfkaj;dlfkj */}
-
             <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
                 <h2 className="text-4xl font-bold text-gray-800 mb-8">About Section Editor</h2>
+                <img width={50} src={`http://localhost:8000/${aboutImage}`} alt="" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
 
                     {/* Subheading */}
@@ -201,7 +193,7 @@ const About = () => {
                             type="file"
                             name="title2"
                             //   value={formData.title2}
-                            //   onChange={handleChange}
+                            onChange={handleChange}
                             className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
                         />
                     </label>
