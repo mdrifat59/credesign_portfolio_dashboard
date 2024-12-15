@@ -49,7 +49,7 @@ const Serviceshow = () => {
                 visible={showToast}
                 onClose={() => setShowToast(false)}
             />
-            <ServiceModal setShowToast={setShowToast} setMessage={setMessage} setServices={setServices} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} openModal={openModal} closeModal={closeModal} id={id} title={title} subTitle={subTitle} showImage={showImage} setTitle={setTitle} setSubTitle={setSubTitle} setShowImage={setShowImage} />
+            <ServiceModal setShowToast={setShowToast} setImage={setImage} image={image} setMessage={setMessage} setServices={setServices} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} openModal={openModal} closeModal={closeModal} id={id} title={title} subTitle={subTitle} showImage={showImage} setTitle={setTitle} setSubTitle={setSubTitle} setShowImage={setShowImage} />
 
             <div className="p-6 bg-gray-100 rounded-lg shadow-lg mt-10">
                 <h2 className="text-2xl font-bold mb-4 text-center">Services Table</h2>
@@ -73,7 +73,7 @@ const Serviceshow = () => {
                                     <td className="border border-gray-300 px-4 py-2">
                                         {service.showImage && service.image ? (
                                             <img
-                                                src={service.image || "https://via.placeholder.com/100"}
+                                                src={`http://localhost:8000/${service.image}`}
                                                 alt={service.title}
                                                 className="h-16 w-16 object-cover rounded"
                                             />

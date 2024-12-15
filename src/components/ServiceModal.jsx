@@ -2,16 +2,16 @@ import React from 'react'
 import Modal from './Modal'
 import axios from 'axios'
 
-const ServiceModal = ({ setMessage, setShowToast, isModalOpen, closeModal, setServices, id, title, subTitle, showImage, setTitle, setSubTitle, setShowImage }) => {
+const ServiceModal = ({ image, setImage, setMessage, setShowToast, isModalOpen, closeModal, setServices, id, title, subTitle, showImage, setTitle, setSubTitle, setShowImage }) => {
 
     const handleUpdate = () => {
+        const data = new FormData()
+        data.append("title", title)
+        data.append("subTitle", subTitle)
+        data.append("showImage", showImage)
+        data.append("image", image)
         if (id) {
-            axios.put(`http://localhost:8000/service/${id}`, {
-                // image: image,
-                title: title,
-                subTitle: subTitle,
-                showImage: showImage,
-            }).then((res) => {
+            axios.put(`http://localhost:8000/service/${id}`, data).then((res) => {
                 setShowToast(true)
                 setMessage(res.data.message)
                 closeModal()
@@ -23,11 +23,15 @@ const ServiceModal = ({ setMessage, setShowToast, isModalOpen, closeModal, setSe
             })
         }
     }
+    const handleChange = (e) => {
+        setImage(e.target.files[0])
+    }
     return (
         <>
             <Modal isOpen={isModalOpen} onClose={closeModal} title="My Modal">
                 <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-md mx-auto">
                     <h2 className="text-4xl font-bold mb-4 capitalize text-center">Edit Service</h2>
+
                     <form className="space-y-4">
                         {/* Title Input */}
                         <div>
@@ -56,14 +60,17 @@ const ServiceModal = ({ setMessage, setShowToast, isModalOpen, closeModal, setSe
                         </div>
 
                         {/* Image Upload */}
-                        <div>
+                        <div className=' '>
                             <label className="block text-sm font-medium text-gray-700">Image</label>
                             <input
                                 type="file"
-                                onChange={(e) => setImage(e.target.value)}
+                                onChange={handleChange}
+                                // value={image}
+                                name='image'
                                 className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
                             />
                         </div>
+                        <img width={50} src={`http://localhost:8000/${image}`} alt="" />
 
                         {/* Show Image Checkbox */}
                         <div className="flex items-center">

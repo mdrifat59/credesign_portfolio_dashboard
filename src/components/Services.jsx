@@ -9,26 +9,28 @@ const Services = () => {
     const [image, setImage] = useState('')
     const [showImage, setShowImage] = useState(false)
     const [showToast, setShowToast] = useState(false);
-    const [message, setMessage] = useState("") 
+    const [message, setMessage] = useState("")
 
-    const handleAddService = () => { 
-         
-            axios.post('http://localhost:8000/service', {
-              // image: image,
-              title: title,
-              subTitle: subTitle,
-              showImage: showImage,
-          }).then((res) => {
-              setTitle("")
-              setSubTitle("")
-              setShowImage(false)
-              setImage("")
-              setShowToast(true)
-              setMessage(res.data)
-          }).catch((err) => {
-              console.log(err);
-          }); 
+    const handleAddService = () => {
+        const data = new FormData()
+        data.append("title", title)
+        data.append("subTitle", subTitle)
+        data.append("showImage", showImage)
+        data.append("image", image)
+        axios.post('http://localhost:8000/service', data).then((res) => {
+            setTitle("")
+            setSubTitle("")
+            setShowImage(false)
+            setImage("")
+            setShowToast(true)
+            setMessage(res.data)
+        }).catch((err) => {
+            console.log(err);
+        });
 
+    }
+    const handleChange = (e) => {
+        setImage(e.target.files[0])
     }
     return (
         <>
@@ -71,7 +73,8 @@ const Services = () => {
                         <label className="block text-sm font-medium text-gray-700">Image</label>
                         <input
                             type="file"
-                            onChange={(e) => setImage(e.target.value)}
+                            // onChange={(e) => setImage(e.target.value)}
+                            onChange={handleChange}
                             className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
                         />
                     </div>
@@ -99,8 +102,8 @@ const Services = () => {
                         Add Service
                     </button>
                 </form>
-            </div> 
-            <Serviceshow  />
+            </div>
+            <Serviceshow />
         </>
 
     );
