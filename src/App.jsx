@@ -5,6 +5,7 @@ import Banner from './components/Banner'
 import About from './components/About'
 import Services from './components/Services'
 import Resume from './components/resume/Resume'
+import Portfolio from './components/Portfolio'
 
 function App() {
 const [activeMenu, setActiveMenu]=useState('Navbar')
@@ -35,7 +36,7 @@ const [activeMenu, setActiveMenu]=useState('Navbar')
           {activeMenu == "About" &&  <About/> }
           {activeMenu == "Services" && <Services/> }
           {activeMenu == "Resume" && <Resume/> }
-          {activeMenu == "Portfolio" && <h1>Portfolio</h1> }
+          {activeMenu == "Portfolio" &&  <Portfolio/> }
           {activeMenu == "Testimonial" && <h1>Testimonial</h1> }
           {activeMenu == "Blog" && <h1>Blog</h1> }
           {activeMenu == "Footer" && <h1>Footer</h1> } 
