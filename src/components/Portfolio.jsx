@@ -12,6 +12,7 @@ const Portfolio = () => {
             async function fatchData() {
                 const { data } = await axios.get('http://localhost:8000/portfolioitem')
                 setPortfolio(data)
+                setImage('')
             }
             fatchData()
             console.log(res);
@@ -29,6 +30,18 @@ const Portfolio = () => {
         }
         fatchData()
     }, [])
+    const handlePortfolioDelete = (item) => {
+        axios.delete(`http://localhost:8000/portfolio/${item._id}`).then(() => {
+            async function fatchData() {
+                const { data } = await axios.get('http://localhost:8000/portfolioitem')
+                setPortfolio(data)
+            }
+            fatchData()
+        })
+            .catch((error) => {
+                console.error("Error deleting item:", error);
+            });
+    }
     return (
         <>
             <div className="p-6 bg-gray-100 rounded-lg shadow-lg max-w-md mx-auto">
@@ -79,7 +92,7 @@ const Portfolio = () => {
                                         {/* Actions Column */}
                                         <td className="border w-14 border-gray-300 px-4 py-2 text-center space-x-2">
                                             <button
-                                                // onClick={() => handleExperianceDelete(item)}
+                                                onClick={() => handlePortfolioDelete(item)}
                                                 className="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded hover:bg-red-700"
                                             >
                                                 Delete
